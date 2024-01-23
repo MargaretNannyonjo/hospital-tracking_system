@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 .App {
   text-align: center;
+  font-family: "Lato" sans-serif;
 }
 
 .App-logo {
@@ -35,4 +37,64 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* LOGIN PAGE */
+.Signin {
+  margin-top: 1rem;
+}
+.Signin button {
+  padding: 0.5rem;
+  font-weight: bold;
+  font-size: larger;
+  margin: 0 1rem;
+  border: none;
+  border-radius: 0.6rem;
+  font-family: "Lato" sans-serif;
+  background-color: rgba(1, 32, 1, 0.548);
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.Signin button:hover {
+  background-color: rgb(3, 66, 3);
+}
+
+.ShowLoginDetails {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ShowLoginDetails input {
+  padding: 0.4rem;
+  width: 20rem;
+  font-size: large;
+  margin-bottom: 0.7rem;
+}
+
+.ShowLoginDetails p {
+  font-size: large;
+  margin: 0.7rem;
+}
+
+.ShowLoginDetails button {
+  padding: 0.4rem;
+  font-weight: bold;
+  font-size: larger;
+  margin-top: 0.7rem;
+  border: none;
+  border-radius: 0.6rem;
+  font-family: "Lato" sans-serif;
+  background-color: rgba(1, 32, 1, 0.586);
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.ShowLoginDetails button:hover {
+  background-color: rgb(3, 66, 3);
+}
+.ShowLoginDetails label {
+  margin-right: 12rem;
 }
