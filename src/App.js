@@ -5,16 +5,52 @@ import { NavBar } from "./components/navBar";
 import { Login } from "./pages/login";
 import { Home } from "./pages/home";
 import { PatientsPage } from "./pages/patientsPage";
+import { Discharge } from "./pages/discharge";
+import { PatientsList } from "./pages/patientsList";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <NavBar />
         <Routes>
-          <Route path="/" element={<Login exact component={Login} />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/patientsPage" element={<PatientsPage />} />
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/home"
+            element={
+              <>
+                <NavBar />
+                <Home />
+              </>
+            }
+          />
+          <Route
+            path="/patientsPage"
+            element={
+              <>
+                <NavBar />
+                <PatientsPage />
+              </>
+            }
+          />
+          <Route
+            path="/discharge"
+            element={
+              <>
+                <NavBar />
+                <Discharge />
+              </>
+            }
+          />
+
+          <Route
+            path="/patientsList"
+            element={
+              <>
+                <NavBar />
+                <PatientsList />
+              </>
+            }
+          />
         </Routes>
       </Router>
     </div>

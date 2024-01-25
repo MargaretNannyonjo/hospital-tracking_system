@@ -1,20 +1,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AdmissionForm = () => {
+  const [Patients, setPatients] = useState([]);
+  const navigate = useNavigate();
+
+  const [checkboxValue, setCheckboxValue] = useState({
+    emergency: false,
+    inPatient: false,
+    outPatient: false,
+  });
+
   const schema = yup.object().shape({
     patientNumber: yup.number().positive().required("This field is required"),
     fullName: yup.string().required("This field is required"),
-    dateOfBirth: yup
-      .date()
-      .max(new Date())
-      .transform((originalValue, originalObject) => {
-        return originalValue instanceof Date
-          ? originalValue.toISOString().split("T")[0]
-          : originalValue;
-      })
-      .required("This field is required"),
+    dateOfBirth: yup.date().max(new Date()).required("This field is required"),
     occupation: yup.string(),
     age: yup.number().positive().required("This field is required"),
     weight: yup.number().positive().required("This field is required"),
@@ -33,29 +36,50 @@ export const AdmissionForm = () => {
     diagnosis: yup.string(),
     healthcareProvider: yup.string().required("This field is reqired"),
     cadre: yup.string().required("This field is reqired"),
-    date: yup
-      .date()
-      .max(new Date())
-      .transform((originalValue, originalObject) => {
-        return originalValue instanceof Date
-          ? originalValue.toISOString().split("T")[0]
-          : originalValue;
-      }),
     condition: yup.string().required("This field is reqired"),
   });
+
+  const handleCheckBoxChange = (name) => {
+    setCheckboxValue({ ...checkboxValue, [name]: !checkboxValue[name] });
+  };
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const getPatientStatus = () => {
+    if (checkboxValue.emergency) {
+      return "Emergency";
+    } else if (checkboxValue.inPatient) {
+      return "In Patient";
+    } else if (checkboxValue.outPatient) {
+      return "Out Patient";
+    }
+    return "Unknown";
   };
 
+  const onSubmit = (data) => {
+    const NewPatient = {
+      date: data.date,
+      patientNumber: data.patientNumber,
+      fullName: data.fullName,
+      age: data.age,
+      diagnosis: data.diagnosis,
+      status: getPatientStatus(),
+    };
+
+    setPatients([...Patients, NewPatient]);
+    reset();
+
+    navigate("/patientsList", {
+      state: { Patients: [...Patients, NewPatient] },
+    });
+  };
   return (
     <div className="AdmissionForm">
       <h1>ADMISSION FORM</h1>
@@ -69,7 +93,7 @@ export const AdmissionForm = () => {
         />
         <input
           type="text"
-          placeholder="Patient Number"
+          placeholder="Patient ID"
           {...register("patientNumber")}
           style={{ padding: ".5rem", fontSize: "1rem" }}
         />
@@ -81,17 +105,26 @@ export const AdmissionForm = () => {
       <div className="Emergency">
         <label>
           Emergency
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            onChange={() => handleCheckBoxChange("emergency")}
+          />
         </label>
 
         <label>
           Out Patient
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            onChange={() => handleCheckBoxChange("outPatient")}
+          />
         </label>
 
         <label>
           In Patient
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            onChange={() => handleCheckBoxChange("inPatient")}
+          />
         </label>
       </div>
 
@@ -266,7 +299,7 @@ export const AdmissionForm = () => {
           </p>
         </div>
 
-        <input type="submit" style={{ cursor: "pointer" }} />
+        <button className="buttonSave">Save</button>
       </form>
     </div>
   );
