@@ -1,8 +1,17 @@
+import React, { useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { GraphComponent } from "../components/graph";
 
 export const PatientsList = () => {
   const location = useLocation();
   const { Patients } = location.state || { Patients: [] };
+  const graphRef = useRef();
+
+  const handlePatientAdded = (patientCount) => {
+    // Update the patient count in the graph component
+    console.log("Patient added. Total Patients:", patientCount);
+  };
+
   return (
     <div className="PatientList">
       <h1>LIST OF PATIENTS</h1>
@@ -37,6 +46,7 @@ export const PatientsList = () => {
           </table>
         )}
       </div>
+      <GraphComponent onPatientAdded={handlePatientAdded} ref={graphRef} />
     </div>
   );
 };

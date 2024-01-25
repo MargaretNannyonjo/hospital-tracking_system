@@ -252,7 +252,7 @@ form .PatientInfo {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; */
+  height: auto;
   margin: 40px;
   margin-top: 20px;
 }
